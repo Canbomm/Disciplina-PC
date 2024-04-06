@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#define llint long long int
 // \n
 // scanf("%d",&a);
 // printf("%d\n",a);
