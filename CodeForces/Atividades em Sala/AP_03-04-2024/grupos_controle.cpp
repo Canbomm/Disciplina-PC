@@ -9,9 +9,18 @@ int main(){
     llint individuos;
     int result = -1;
     scanf("%lld",&individuos);
-    for(int divisor=2;individuos%divisor == 0 && (individuos/divisor)%2 == 0 && divisor < individuos;divisor++){
-        printf("Procurando\n");
-        result = individuos/divisor;
+    if(individuos <= 2){
+      result = 1;
+    }
+    else{
+      for(int divisor = 2;divisor < individuos;divisor++){
+          if(individuos%divisor == 0 && (individuos/divisor)%2 != 0){
+              result = individuos/divisor;
+          }
+      }
+      if(result == -1){
+        result = individuos;
+      }
     }
     printf("%d\n",result);
 

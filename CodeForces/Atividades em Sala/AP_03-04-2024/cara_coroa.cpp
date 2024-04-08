@@ -8,6 +8,6 @@ int main(){
     int porc_gar = (gar*100)/total;
  
     printf("%d %d\n",porc_lig,porc_gar);
-    
+        
     return 0;
 }
