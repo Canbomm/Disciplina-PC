@@ -1,11 +1,4 @@
-#include <bits/stdc++.h>
-
-// #define llint long long int
-// #define desync ios::sync_with_stdio(false)
-// g++ script.cpp -std=c++17 -o exec
-// \n
-
-using namespace std;
+#include <cstdio>
 
 int soma_digitos(int num){
   int soma = 0;
@@ -20,17 +13,11 @@ int main(){
   scanf("%d %d %d",&n,&a,&b);
 
   for(int i = 1; i <= n; i++){
-    for(int j = i; j <= n; j++){
-      soma = soma_digitos(i);
-      if(soma >= a && soma <= b){
-        total++;
-      }
-      soma = soma_digitos(j);
-      if(soma >= a && soma <= b){
-        total++;
-      }
+    soma = soma_digitos(i);
+    if(soma >= a && soma <= b){
+      total = total + i;
     }
   }
-  printf("Resultado: %d\n",total);
+  printf("%d\n",total);
   return 0;
 }
