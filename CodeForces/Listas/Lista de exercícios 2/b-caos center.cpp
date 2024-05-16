@@ -6,60 +6,53 @@
 // \n
 
 using namespace std;
- 
-int main(){
-  int total; // total de clientes
-  int tempo; // tempo total gasto pelo operador
-  int minutos; // tempo que demora pra resolver o problema
-  int paciencia; // tempo que o cliente aguenta esperar
-  int retorno; // tempo de retorno ate outra ligacao
-  int disponivel = 0; // tempo que o cliente voltara
-  tuple <int, int, int, int> cliente;
-  queue<tuple <int, int, int, int>> clientes;
 
-  scanf("%d",&total);
-  for(int i = 0; i < total; i++){
-    scanf("%d %d %d",&minutos,&paciencia,&retorno);
-    cliente = make_tuple(minutos,paciencia,retorno,disponivel);
+int main(){
+  int n,tempo=0;
+  scanf("%d\n",&n);
+
+  queue<tuple<int,int,int,int>> clientes;
+  tuple<int,int,int,int> cliente;
+  int t,p,r,cmax,cmin;
+  for(int ind=0;ind < n;ind++){
+    scanf("%d %d %d",&t,&p,&r);
+    cliente = make_tuple(t,p+r,p,0);
     clientes.push(cliente);
   }
 
-  cliente = clientes.front();
-  clientes.pop();
-  tempo = get<0>(cliente); // sempre vai atender o 1 cliente da fila
-
-  int esperando = 0;
+  int total = 0;
   while(!clientes.empty()){
     cliente = clientes.front();
     clientes.pop();
-    minutos = get<0>(cliente);
-    paciencia = get<1>(cliente);
-    retorno = get<2>(cliente);
-    disponivel = get<3>(cliente);
-    printf("Cliente: (%d %d %d %d) __ ",minutos,paciencia,retorno,disponivel);
 
-    if(tempo > disponivel && tempo <= (disponivel+paciencia)){
-      printf("Saiu da fila\n");
-      esperando = 0;
-      tempo += minutos;
-    }
-    else if(((int) clientes.size()) == esperando){
-      printf("Entrou no else if - %d == %d\n",((int) clientes.size()),esperando);
-      disponivel += paciencia + retorno;
-      tempo = disponivel + 1;
-      cliente = make_tuple(minutos,paciencia,retorno,disponivel);
+    t = get<0>(cliente);
+    p = get<1>(cliente);
+    cmax = get<2>(cliente);
+    cmin = get<3>(cliente);
+    printf("Fila: %d, tempo: %d, cliente: (%d %d %d %d) status: ",(int) clientes.size()+1,tempo,t,p,cmax,cmin);
+    if(tempo > cmax || tempo < cmin && total != (int) clientes.size()+1){
+      // cliente nao disponivel
+      printf("cliente nao disponivel\n");
+      cmax += p;
+      cmin += p;
+      cliente = make_tuple(t,p,cmax,cmin);
       clientes.push(cliente);
+      total += 1;
+    }
+    else if(tempo > cmax || tempo < cmin && total == (int) clientes.size()+1){
+      // operador tem que esperar
+      printf("operador esperando\n");
+      tempo = cmin + t;
+      total = 0;
     }
     else{
-      printf("%d == %d\n",((int) clientes.size()),esperando);
-      disponivel += paciencia + retorno;
-      cliente = make_tuple(minutos,paciencia,retorno,disponivel);
-      clientes.push(cliente);
-      esperando += 1;
+      // cliente atendido
+      printf("cliente atendido\n");
+      total = 0;
+      tempo += t;
     }
   }
-
-  printf("%d\n",tempo);
+  printf("Tempo total: %d\n",tempo);
 
   return 0;
 }
