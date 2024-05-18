@@ -1,58 +1,62 @@
 #include <bits/stdc++.h>
 
-// #define llint long long int
-// #define desync ios::sync_with_stdio(false)
-// g++ script.cpp -std=c++17 -o exec
-// \n
-
 using namespace std;
+typedef tuple<int, int, int, int, int> client; // i, t, p + r, max, min (5 var)
 
+class comparator{
+  public:
+    bool operator()(client a, client b){
+      int ai,at,apr,amax,amin;
+      int bi,bt,bpr,bmax,bmin;
+      tie(ai,at,apr,amax,amin) = a;
+      tie(bi,bt,bpr,bmax,bmin) = b;
+      if(bmin < amin)
+        return true;
+      else if(bmin == amin){
+        if(bi < ai)
+          return true;
+      }
+      return false;
+    }
+};
+ 
 int main(){
-  int n,tempo=0;
-  scanf("%d\n",&n);
+  // Estrutura
+  client cliente;
+  priority_queue<client, vector<client>, comparator> clientes;
 
-  queue<tuple<int,int,int,int>> clientes;
-  tuple<int,int,int,int> cliente;
-  int t,p,r,cmax,cmin;
-  for(int ind=0;ind < n;ind++){
+  // Entrada
+  int n,t,p,r,max,min;
+  scanf("%d",&n);
+  for(int i = 1; i <= n; i++){
     scanf("%d %d %d",&t,&p,&r);
-    cliente = make_tuple(t,p+r,p,0);
+    // printf("Entrada: (%d %d %d)\n",t,p,r);
+    cliente = make_tuple(i,t,p+r,p,0);
     clientes.push(cliente);
   }
 
-  int total = 0;
+  // Processamento
+  int i,pr, tempo = 0;
   while(!clientes.empty()){
-    cliente = clientes.front();
+    cliente = clientes.top();
     clientes.pop();
-
-    t = get<0>(cliente);
-    p = get<1>(cliente);
-    cmax = get<2>(cliente);
-    cmin = get<3>(cliente);
-    printf("Fila: %d, tempo: %d, cliente: (%d %d %d %d) status: ",(int) clientes.size()+1,tempo,t,p,cmax,cmin);
-    if(tempo > cmax || tempo < cmin && total != (int) clientes.size()+1){
-      // cliente nao disponivel
-      printf("cliente nao disponivel\n");
-      cmax += p;
-      cmin += p;
-      cliente = make_tuple(t,p,cmax,cmin);
-      clientes.push(cliente);
-      total += 1;
-    }
-    else if(tempo > cmax || tempo < cmin && total == (int) clientes.size()+1){
-      // operador tem que esperar
-      printf("operador esperando\n");
-      tempo = cmin + t;
-      total = 0;
-    }
-    else{
-      // cliente atendido
-      printf("cliente atendido\n");
-      total = 0;
+    tie(i,t,pr,max,min) = cliente;
+    // printf("Cliente %d: (%d %d), %d>t>%d\n",i,t,pr,max,min);
+    if(max >= tempo && tempo >= min){
+      // cliente disponivel
       tempo += t;
     }
+    else if(min >= tempo){
+      // operador tem que esperar
+      tempo = min + t;
+    }
+    else{
+      // cliente indisponivel
+      cliente = make_tuple(i,t,pr,max+pr,min+pr);
+      clientes.push(cliente);
+    }
   }
-  printf("Tempo total: %d\n",tempo);
+  printf("%d\n",tempo);
 
-  return 0;
+  return 0; // \n
 }

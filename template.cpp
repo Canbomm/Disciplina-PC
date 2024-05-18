@@ -1,13 +1,12 @@
 #include <bits/stdc++.h>
 
-// #define llint long long int
-// #define desync ios::sync_with_stdio(false)
-// g++ script.cpp -std=c++17 -o exec
-// \n
+// ios::sync_with_stdio(false);
+// cin.tie(0);
+// cout.tie(0);
+// typedef ORIGINAL NEW;
 
 using namespace std;
- 
-int main(){
-  return 0;
-}
 
+int main(){
+  return 0; // \n
+}
