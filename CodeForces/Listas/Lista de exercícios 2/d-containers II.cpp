@@ -1,24 +1,23 @@
 #include <bits/stdc++.h>
 
-// #define llint long long int
-// #define desync ios::sync_with_stdio(false)
-// g++ script.cpp -std=c++17 -o exec
-// \n
+// ios::sync_with_stdio(false);
+// cin.tie(0);
+// cout.tie(0);
+// typedef ORIGINAL NEW;
 
 using namespace std;
- 
+
 int main(){
-  char container;
-  stack<char> porto;
-  stack<char> temp;
-  vector<stack<char>> pilhas;
-  pilhas.push_back(porto);
-
-  while(scanf("%c",&container) != -1){
-    if(container >= 65 && container <= 90){
-      porto.push(container);
-    }
+  // Estrutura
+  queue<int> containers;
+  // Entrada
+  int aux;
+  while(scanf("%c",&aux) != -1){
+    aux -= 65;
+    if(aux >= 0 && aux <= 25)
+      containers.push(aux);  
   }
-
-  return 0;
+  // Processamento
+  
+  return 0; // \n
 }

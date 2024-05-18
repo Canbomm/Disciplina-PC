@@ -8,5 +8,8 @@
 using namespace std;
 
 int main(){
+  // Estrutura
+  // Entrada
+  // Processamento
   return 0; // \n
 }
