@@ -9,15 +9,17 @@ using namespace std;
 
 int main(){
   // Estrutura
-  queue<int> containers;
+  stack<int> containers;
+  stack<int> organizando;
   // Entrada
   int aux;
   while(scanf("%c",&aux) != -1){
-    aux -= 65;
-    if(aux >= 0 && aux <= 25)
-      containers.push(aux);  
+    if(aux >= 65 && aux <= 90){
+      printf("%c -> %d\n",aux,aux-65);
+      containers.push(aux-65);
+    }
   }
   // Processamento
-  
+
   return 0; // \n
 }
