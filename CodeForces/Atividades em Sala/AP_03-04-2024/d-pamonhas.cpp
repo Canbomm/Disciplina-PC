@@ -1,25 +1,27 @@
-#include <cstdio>
-
-int mdc(int a, int b) {
-  if (b == 0)
+#include <bits/stdc++.h>
+ 
+using namespace std;
+ 
+int MDC(int a, int b){
+  // Algoritmo de Euclides
+  if(a == b)
     return a;
-  return mdc(b, a % b);
-}
-
-int triplo_mdc(int a, int b, int c){
-  int teste1 = mdc(a,b);
-  int teste2 = mdc(b,c);
-  int teste3 = mdc(a,c);
+ 
+  int div = max(a,b);
+  int divisor = min(a,b);
+  int aux;
+  while(div%divisor != 0){
+    aux = divisor;
+    divisor = div%divisor;
+    div = aux;
+  }
+  return divisor;
 }
  
 int main(){
-  int doces,salgadas,fit; // 10^9 int
-  scanf("%d %d %d",&doces,&salgadas,&fit);
-  int total = (doces+salgadas+fit);
-  int teste = mdc(doces,salgadas);
-
-  printf("Teste: %d\n",teste);
-
-  return 0;
+  int doce,sal,fit;
+  scanf("%d %d %d",&doce,&sal,&fit);
+  int teste = MDC(MDC(doce,sal),MDC(sal,fit));
+  printf("%d\n",teste);
+  return 0; // \n
 }
-
